@@ -74,7 +74,7 @@ public class DefaultHeader extends RelativeLayout implements RefreshHeader {
         rlHeaderText.addRule(RelativeLayout.RIGHT_OF,mArrowView.getId());
         rlHeaderText.leftMargin = DensityUtil.dp2px(20);
         mHeaderText = new TextView(context);
-        mHeaderText.setText(mArrayHeaderText[2]);//下拉开始刷新
+        mHeaderText.setText(" ");//下拉开始刷新
         parent.addView(mHeaderText,rlHeaderText);
 
         RelativeLayout.LayoutParams rlProgressView = new RelativeLayout.LayoutParams(DensityUtil.dp2px(20),DensityUtil.dp2px(20));
