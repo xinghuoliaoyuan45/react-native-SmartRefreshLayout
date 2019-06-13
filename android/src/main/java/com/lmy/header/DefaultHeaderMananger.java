@@ -39,4 +39,8 @@ public class DefaultHeaderMananger extends SimpleViewManager<DefaultHeader> {
     public void setAccentColor(DefaultHeader view,String accentColor){
         view.setAccentColor(Color.parseColor(accentColor));
     }
+    @ReactProp(name = "headerTitle")
+    public void setHeaderTitle(DefaultHeader view,String headerTitle){
+        view.setHeaderArrayText(headerTitle.split("\\&"));
+    }
 }
