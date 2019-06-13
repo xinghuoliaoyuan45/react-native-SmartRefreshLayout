@@ -5,6 +5,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,8 @@ import com.scwang.smartrefresh.layout.util.DensityUtil;
 
 public class DefaultHeader extends RelativeLayout implements RefreshHeader {
     private TextView mHeaderText;//标题文本
+
+    private String[] mArrayHeaderText; //
     private PathsView mArrowView;//下拉箭头
     private ImageView mProgressView;//刷新动画视图
     private ProgressDrawable mProgressDrawable;//刷新动画
@@ -71,7 +74,7 @@ public class DefaultHeader extends RelativeLayout implements RefreshHeader {
         rlHeaderText.addRule(RelativeLayout.RIGHT_OF,mArrowView.getId());
         rlHeaderText.leftMargin = DensityUtil.dp2px(20);
         mHeaderText = new TextView(context);
-        mHeaderText.setText("下拉开始刷新");
+        mHeaderText.setText(mArrayHeaderText[2]);//下拉开始刷新
         parent.addView(mHeaderText,rlHeaderText);
 
         RelativeLayout.LayoutParams rlProgressView = new RelativeLayout.LayoutParams(DensityUtil.dp2px(20),DensityUtil.dp2px(20));
@@ -109,9 +112,9 @@ public class DefaultHeader extends RelativeLayout implements RefreshHeader {
     public int onFinish(RefreshLayout layout, boolean success) {
         mProgressDrawable.stop();//停止动画
         if (success) {
-            mHeaderText.setText("刷新完成");
+            mHeaderText.setText(mArrayHeaderText[0]);//刷新完成
         } else {
-            mHeaderText.setText("刷新失败");
+            mHeaderText.setText(mArrayHeaderText[1]);//刷新失败
         }
         return 500;//延迟500毫秒之后再弹回
     }
@@ -120,18 +123,18 @@ public class DefaultHeader extends RelativeLayout implements RefreshHeader {
         switch (newState) {
             case None:
             case PullDownToRefresh:
-                mHeaderText.setText("下拉开始刷新");
+                mHeaderText.setText(mArrayHeaderText[2]);//下拉开始刷新
                 mArrowView.setVisibility(VISIBLE);//显示下拉箭头
                 mProgressView.setVisibility(GONE);//隐藏动画
                 mArrowView.animate().rotation(0);//还原箭头方向
                 break;
             case Refreshing:
-                mHeaderText.setText("正在刷新");
+                mHeaderText.setText(mArrayHeaderText[3]);//正在刷新
                 mProgressView.setVisibility(VISIBLE);//显示加载动画
                 mArrowView.setVisibility(GONE);//隐藏箭头
                 break;
             case ReleaseToRefresh:
-                mHeaderText.setText("释放立即刷新");
+                mHeaderText.setText(mArrayHeaderText[4]);//释放立即刷新
                 mArrowView.animate().rotation(180);//显示箭头改为朝上
                 break;
         }
@@ -188,5 +191,14 @@ public class DefaultHeader extends RelativeLayout implements RefreshHeader {
         mHeaderText.setTextColor(accentColor);
         return this;
     }
+
+
+    public DefaultHeader setHeaderArrayText(String[]  ArrayText){
+
+        mArrayHeaderText = ArrayText;
+
+        return this;
+    }
+
 
 }
