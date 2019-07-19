@@ -41,6 +41,8 @@ public class DefaultHeaderMananger extends SimpleViewManager<DefaultHeader> {
     }
     @ReactProp(name = "headerTitle")
     public void setHeaderTitle(DefaultHeader view,String headerTitle){
+      if(headerTitle != null){
         view.setHeaderArrayText(headerTitle.split("\\^"));
+      }
     }
 }
